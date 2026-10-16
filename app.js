@@ -15,6 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
       <label>Destino:</label>
       <input id="destino" placeholder="¿Adónde vas?">
 
+      <label>Distancia del viaje (km):</label>
+      <input id="distancia" type="number" min="0.1" step="0.1"
+             placeholder="Introduce la distancia en kilómetros">
+
       <label>Tipo de vehículo:</label>
       <select id="vehiculo">
         <option value="400">Triciclo - 400 CUP/km</option>
@@ -24,14 +28,43 @@ document.addEventListener("DOMContentLoaded", () => {
         <option value="400">Bicitaxi eléctrico - 400 CUP/km</option>
       </select>
 
-      <p>El precio definitivo dependerá de la distancia.</p>
+      <h3 id="precio">Precio estimado: pendiente</h3>
+      <p>El precio incluye 200 CUP por recogida.</p>
 
-      <button onclick="alert('La solicitud de viajes estará disponible cuando conectemos el sistema de conductores.')">
+      <button id="calcular">Calcular precio</button>
+
+      <button onclick="alert('La solicitud estará disponible cuando conectemos el sistema de conductores.')">
         Solicitar viaje
       </button>
 
       <button onclick="location.reload()">Volver</button>
     `;
+
+    const distancia = document.getElementById("distancia");
+    const vehiculo = document.getElementById("vehiculo");
+    const precio = document.getElementById("precio");
+
+    function calcularPrecio() {
+      const km = Number(distancia.value);
+
+      if (!km || km <= 0) {
+        precio.textContent = "Introduce una distancia válida.";
+        return;
+      }
+
+      const total = km * Number(vehiculo.value) + 200;
+
+      precio.textContent =
+        "Precio estimado: " +
+        total.toLocaleString("es-ES") +
+        " CUP";
+    }
+
+    document.getElementById("calcular")
+      .addEventListener("click", calcularPrecio);
+
+    distancia.addEventListener("input", calcularPrecio);
+    vehiculo.addEventListener("change", calcularPrecio);
   }
 
   function mostrarChofer() {
@@ -39,7 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
       <h1>🚕 Dalain-Taxi</h1>
       <h2>Registro de chófer</h2>
 
+      <label>Nombre completo:</label>
       <input id="nombre" placeholder="Nombre completo">
+
+      <label>Número de teléfono:</label>
       <input id="telefono" type="tel" placeholder="Número de teléfono">
 
       <label>Tipo de vehículo:</label>
@@ -50,6 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <option>Motoneta</option>
         <option>Bicitaxi eléctrico</option>
       </select>
+
+      <label>Foto del chófer:</label>
+      <input id="fotoChofer" type="file" accept="image/*">
+
+      <label>Foto del vehículo:</label>
+      <input id="fotoVehiculo" type="file" accept="image/*">
 
       <p>Prueba gratuita: 7 días.</p>
       <p>Después: 1.000 CUP mensuales.</p>
