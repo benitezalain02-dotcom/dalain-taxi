@@ -1,4 +1,10 @@
-document.addEventListener("DOMContentLoaded", () => {
+const SUPABASE_URL = "https://tglwfsaesaesgkohpewx.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_FijvZHp1UQkNOfuDcfERiA_RI0GEhXH";
+
+const supabaseDB = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);document.addEventListener("DOMContentLoaded", () => {
   const cuerpo = document.body;
 
   function mostrarPasajero() {
